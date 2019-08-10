@@ -14,19 +14,23 @@ import trafficLight.TrafficLightListener;
 public class Vehicle extends Thread implements TrafficLightListener {
 	private String MACAddress;
 	Boolean waitForGreenLight;		// When this is true, the vehicle is waiting at the intersection for the light to turn green
+	TrafficLight trafficLight;
 	public Vehicle(String MACAddress, TrafficLight trafficLight) {
 		this.MACAddress = MACAddress;
 		waitForGreenLight = true;
+		this.trafficLight = trafficLight;
+		trafficLight.addTrafficLightListener(this);
 	}
 	public void run() {
-		System.out.println("The vehicle with MAC Address " + MACAddress + " is at the traffic light waiting for green.");
+		System.out.println("The vehicle with MAC Address " + MACAddress + " is at the traffic light (" + trafficLight.getLocation() + ") waiting for green.");
 		
 		// Wait forever for the traffic light to turn green.
 		while(waitForGreenLight) {
 			try {Thread.sleep(500);} catch (Exception ex) {}
 		}
 		System.out.println("The vehicle with MAC Address " + MACAddress + " is exiting the run method.");
-		return;
+		trafficLight.removeTrafficListener();// The the Traffic Light to stop informing us
+//		return;
 	}
 	/**
 	 * A Traffic Light object will call this method and we will be informed of the current color of the traffic light

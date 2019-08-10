@@ -13,6 +13,7 @@ public class TrafficLight extends Thread {
 		this.location = location;
 		trafficLightColor = TRAFFIC_LIGHT_COLOR.unknown;
 	}
+	public String getLocation() {return location;}
 	/**
 	 * Tell the Traffic Light that there is a vehicle waiting for information
 	 * @param trafficLightListener
